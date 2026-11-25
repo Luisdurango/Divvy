@@ -3,14 +3,15 @@ package com.portfolio.personal.divvy.domain;
 import java.util.UUID;
 
 public class Participant {
-    public Participant(UUID id, UUID sessionID, String participantName, boolean optTipIn, boolean organizer){
+
+    public Participant(UUID id, UUID sessionID, String participantName, boolean optTipIn, boolean organizer) {
         this.id = id;
         this.sessionID = sessionID;
         this.participantName = participantName;
         this.optTipIn = optTipIn;
         this.organizer = organizer;
-
     }
+
     private final UUID id;
     private final UUID sessionID;
     private String participantName;
@@ -26,12 +27,13 @@ public class Participant {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if(!(o instanceof Participant participant)) return false;
+        if (!(o instanceof Participant)) return false;
+        Participant participant = (Participant) o;
         return this.id.equals(participant.id);
     }
 
     @Override
-    public int  hashCode() {
+    public int hashCode() {
         return id.hashCode();
     }
 }

@@ -5,10 +5,10 @@ import java.util.UUID;
 
 public class Item {
 
-    public Item(UUID id, UUID sessionId,String itemName, BigDecimal price,int quantity,double confidence,boolean flagged, int position ) {
+    public Item(UUID id, UUID sessionId, String itemName, BigDecimal price, int quantity, double confidence, boolean flagged, int position) {
 
-        if(quantity <= 0) throw new IllegalArgumentException("Quantity must be greater than zero");
-        if(price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("Price must be greater or equal than zero");
+        if (quantity <= 0) throw new IllegalArgumentException("Quantity must be greater than zero");
+        if (price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("Price must be greater or equal than zero");
         this.id = id;
         this.sessionId = sessionId;
         this.itemName = itemName;
@@ -21,7 +21,7 @@ public class Item {
 
     private final UUID id;
     private final UUID sessionId;
-    private  String itemName;
+    private String itemName;
     private BigDecimal price;
     private int quantity;
     private final double confidence;
@@ -44,6 +44,11 @@ public class Item {
         Item item = (Item) o;
         return this.id.equals(item.id);
     }
+
     @Override
     public int hashCode() {return this.id.hashCode();}
+
+    public BigDecimal getTotalPrice() {
+        return price.multiply(BigDecimal.valueOf(quantity));
+    }
 }

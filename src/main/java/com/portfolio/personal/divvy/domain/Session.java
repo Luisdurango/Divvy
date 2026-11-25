@@ -5,16 +5,29 @@ import java.util.UUID;
 
 public class Session {
 
-    public Session (UUID id, String joinSessionCode, String restaurantName, BigDecimal tipRate, BigDecimal impoconsumoRate, boolean impoconsumoIncludedInPrices,BigDecimal ivaRate){
+    private Session(UUID id, String joinSessionCode, String restaurantName, BigDecimal tipRate,SessionStatus status, BigDecimal impoconsumoRate, boolean impoconsumoIncludedInPrices, BigDecimal ivaRate) {
         this.id = id;
         this.joinSessionCode = joinSessionCode;
         this.restaurantName = restaurantName;
         this.tipRate = tipRate;
-        this.status = SessionStatus.OPEN;
+        this.status = status;
         this.impoconsumoRate = impoconsumoRate;
         this.impoconsumoIncludedInPrices = impoconsumoIncludedInPrices;
         this.ivaRate = ivaRate;
     }
+
+    public static Session startNew(UUID id, String joinSessionCode, String restaurantName, BigDecimal tipRate, BigDecimal impoconsumoRate, boolean impoconsumoIncludedInPrices, BigDecimal ivaRate){
+        return new Session(id, joinSessionCode, restaurantName, tipRate,SessionStatus.OPEN, impoconsumoRate, impoconsumoIncludedInPrices, ivaRate);
+    }
+
+    public static Session reconstructPersEntity(UUID id, String joinSessionCode, String restaurantName, BigDecimal tipRate,SessionStatus status, BigDecimal impoconsumoRate, boolean impoconsumoIncludedInPrices, BigDecimal ivaRate){
+        return new Session(id, joinSessionCode, restaurantName, tipRate, status, impoconsumoRate, impoconsumoIncludedInPrices, ivaRate);
+
+
+    }
+
+
+
     private final UUID id;
     private final String joinSessionCode;
     private final String restaurantName;
@@ -33,21 +46,16 @@ public class Session {
     public boolean isImpoconsumoIncludedInPrices() {return impoconsumoIncludedInPrices;}
     public BigDecimal getIvaRate() {return ivaRate;}
 
-
     @Override
     public boolean equals(Object o) {
-        //Validates first hand if they are the same object in memory
         if (this == o) return true;
-        //Object not an instance of session, discard it immediately
         if (!(o instanceof Session)) return false;
-        //Previous line didn't trigger, we got an object thats an instance of Session, then we can cast it to see if its ids match
         Session other = (Session) o;
         return this.id.equals(other.id);
     }
 
-    //Hashcode has to be overridden in pair with equal, since the hashcode also uses memory location matching
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return this.id.hashCode();
     }
 }
